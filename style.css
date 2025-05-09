@@ -17,10 +17,25 @@ h1{
     border-radius: 25px;
 }
 
+div{
+    display: flex;
+    padding-left: 10%;
+    padding-right: 10%;
+    align-items: center;
+}
+
+.Affiche{
+    height: 500px;
+    width: auto;
+    border: 5px solid white;
+    border-radius: 5px;
+}
+
 p{
     padding-left: 5%;
     padding-right: 5%;
     font-family: "Lucida Console";
+    font-size: 25px;
 }
 
 
