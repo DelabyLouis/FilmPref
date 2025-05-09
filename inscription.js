@@ -1,10 +1,17 @@
-document.getElementById('registerForm').addEventListener('submit', async function(e) {
+document.getElementById('inscriptionForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const pseudo = document.getElementById('pseudo').value;
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
     const errorMsg = document.getElementById('errorMsg');
     errorMsg.textContent = '';
+
+    // Récupérer la liste des utilisateurs existants
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+    if (users.some(user => user.pseudo === pseudo)) {
+        errorMsg.textContent = 'Ce pseudo est déjà utilisé.';
+        return;
+    }
 
     if (password !== confirmPassword) {
         errorMsg.textContent = 'Les mots de passe ne correspondent pas.';
@@ -16,8 +23,9 @@ document.getElementById('registerForm').addEventListener('submit', async functio
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
-    // Stockage dans le localStorage
-    localStorage.setItem('user', JSON.stringify({ pseudo, password: hashHex }));
+    // Ajouter le nouvel utilisateur à la liste
+    users.push({ pseudo, password: hashHex });
+    localStorage.setItem('users', JSON.stringify(users));
     alert('Inscription réussie !');
-    document.getElementById('registerForm').reset();
+    window.location.href = 'index.html';
 }); 
